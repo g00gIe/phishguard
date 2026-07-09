@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Install Guide | PhishGuard for Android</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #08111f;
+      --panel: rgba(12, 24, 42, 0.78);
+      --panel-strong: rgba(17, 32, 54, 0.92);
+      --line: rgba(151, 206, 255, 0.16);
+      --text: #f2f7ff;
+      --muted: #aab8ca;
+      --blue: #58c9ff;
+      --cyan: #44fff4;
+      --violet: #9a7cff;
+      --green: #58f48d;
+      --warning: #ffd166;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background: #01050d;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 18% 8%, rgba(68, 255, 244, 0.14), transparent 28rem),
+        radial-gradient(circle at 88% 12%, rgba(154, 124, 255, 0.14), transparent 26rem);
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 78%);
+      pointer-events: none;
+    }
+
+    .shader-background {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: #000;
+    }
+
+    .shader-background canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 16, 30, 0.82);
+      backdrop-filter: blur(20px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 76px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: 1.12rem;
+      font-weight: 700;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      box-shadow: 0 0 28px rgba(68, 255, 244, 0.18);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 0 18px;
+      border: 1px solid rgba(88, 201, 255, 0.38);
+      border-radius: 6px;
+      color: #04111d;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      font-weight: 800;
+      box-shadow: 0 14px 36px rgba(68, 255, 244, 0.18);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 46px rgba(68, 255, 244, 0.24);
+    }
+
+    .button.secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.035);
+      box-shadow: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+      gap: 48px;
+      align-items: center;
+      padding: 70px 0 46px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      margin-bottom: 22px;
+      padding: 8px 12px;
+      border: 1px solid rgba(88, 201, 255, 0.22);
+      border-radius: 999px;
+      color: var(--cyan);
+      background: rgba(68, 255, 244, 0.07);
+      font-size: 0.77rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 14px var(--green);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-family: "Space Grotesk", Inter, sans-serif;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      font-size: clamp(3rem, 6vw, 5.3rem);
+      line-height: 0.95;
+      font-weight: 700;
+    }
+
+    .accent {
+      color: var(--cyan);
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin: 24px 0 28px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .guide-preview {
+      overflow: hidden;
+      border: 1px solid rgba(88, 201, 255, 0.22);
+      border-radius: 12px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .guide-preview img {
+      width: 100%;
+      max-height: 620px;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    .guide-preview p {
+      margin: 0;
+      padding: 16px;
+      color: var(--muted);
+      background: rgba(7, 16, 30, 0.9);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .notice {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 16px;
+      margin: 20px 0 0;
+      padding: 18px;
+      border: 1px solid rgba(255, 209, 102, 0.28);
+      border-radius: 10px;
+      background: rgba(255, 209, 102, 0.08);
+    }
+
+    .notice-icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      color: #16100a;
+      background: var(--warning);
+      font-weight: 900;
+    }
+
+    .notice p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    section {
+      padding: 64px 0;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 28px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 1;
+    }
+
+    .section-heading p {
+      max-width: 520px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .install-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .install-step {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.92fr) minmax(0, 1.08fr);
+      gap: 20px;
+      align-items: center;
+      min-height: 360px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .phone-shot {
+      overflow: hidden;
+      align-self: stretch;
+      border: 1px solid rgba(88, 201, 255, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .phone-shot img {
+      width: 100%;
+      height: 100%;
+      max-height: 430px;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    .step-text {
+      display: grid;
+      gap: 12px;
+      align-content: center;
+    }
+
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      color: #06101d;
+      background: var(--green);
+      font-weight: 900;
+    }
+
+    .step-text h3 {
+      font-size: 1.28rem;
+    }
+
+    .step-text p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.62;
+    }
+
+    .cta {
+      width: min(920px, calc(100% - 40px));
+      margin: 64px auto 72px;
+      padding: 34px;
+      border: 1px solid rgba(68, 255, 244, 0.24);
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, rgba(68, 255, 244, 0.1), rgba(154, 124, 255, 0.1)),
+        rgba(7, 16, 30, 0.92);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .cta-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .cta h2 {
+      margin-bottom: 8px;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+    }
+
+    .cta p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 36px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 22px;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .install-step {
+        grid-template-columns: 1fr;
+      }
+
+      .install-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-shot img {
+        max-height: 560px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page-shell {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .nav-inner {
+        min-height: 68px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav .button {
+        display: none;
+      }
+
+      .hero {
+        gap: 32px;
+        padding: 44px 0 34px;
+      }
+
+      h1 {
+        font-size: clamp(2.75rem, 15vw, 4rem);
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .section-heading {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .notice {
+        grid-template-columns: 1fr;
+      }
+
+      .install-step {
+        min-height: 0;
+        padding: 14px;
+      }
+
+      .phone-shot img {
+        max-height: 520px;
+      }
+
+      .cta {
+        padding: 22px;
+      }
+
+      .footer-inner,
+      .footer-links {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shader-background" aria-hidden="true">
+    <canvas id="shader-canvas-ANIMATION_20"></canvas>
+  </div>
+
+  <header class="nav">
+    <div class="page-shell nav-inner">
+      <a class="brand" href="index.html" aria-label="PhishGuard home">
+        <img src="PhishGuardIcon.png" alt="PhishGuard app icon" />
+        <span>PhishGuard</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="index.html#features">Features</a>
+        <a href="index.html#workflow">Workflow</a>
+        <a href="#steps">Install Steps</a>
+        <a href="index.html#example-link">Example Link</a>
+      </nav>
+      <a class="button" href="https://mega.nz/file/knpSFSoC#aHTYhfy2hRtGhSrp3THC5-2n4XSjzkZVMbzG9J80gAY">Try Now</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-shell hero" aria-labelledby="guide-title">
+      <div>
+        <div class="eyebrow"><span class="pulse"></span> APK install guide</div>
+        <h1 id="guide-title">Install PhishGuard <span class="accent">step by step.</span></h1>
+        <p class="hero-copy">
+          Follow this visual guide after tapping Try Now. It walks through downloading the APK, adjusting Android's install prompts, and opening the app from your downloads.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="https://mega.nz/file/knpSFSoC#aHTYhfy2hRtGhSrp3THC5-2n4XSjzkZVMbzG9J80gAY">Download APK</a>
+          <a class="button secondary" href="#steps">View Steps</a>
+        </div>
+        <div class="notice" role="note">
+          <div class="notice-icon">!</div>
+          <p>Only install APK files you trust. If you temporarily turn off Play Protect during installation, turn it back on after PhishGuard is installed.</p>
+        </div>
+      </div>
+      <div class="guide-preview">
+        <img src="Steps-to-download/step1.png" alt="Mega download page showing the PhishGuard APK download button" />
+        <p>Start from the download page, then continue through the Android prompts shown below.</p>
+      </div>
+    </section>
+
+    <section class="page-shell" id="steps" aria-labelledby="steps-title">
+      <div class="section-heading">
+        <h2 id="steps-title">How to download PhishGuard.</h2>
+        <p>These steps are based on the provided guide and paired with the matching screenshots for easier setup.</p>
+      </div>
+
+      <div class="install-grid">
+        <article class="install-step">
+          <div class="phone-shot">
+            <img src="Steps-to-download/step1.png" alt="Step 1 PhishGuard APK download page" />
+          </div>
+          <div class="step-text">
+            <div class="step-number">1</div>
+            <h3>Tap Try Now and download</h3>
+            <p>Tap the Try Now button on the PhishGuard page. When the Mega download page opens, tap the download icon for the APK file.</p>
+          </div>
+        </article>
+
+        <article class="install-step">
+          <div class="phone-shot">
+            <img src="Steps-to-download/step2.jpeg" alt="Step 2 continue APK download prompt" />
+          </div>
+          <div class="step-text">
+            <div class="step-number">2</div>
+            <h3>Continue the APK download</h3>
+            <p>Confirm the browser download prompt so the PhishGuard APK can be saved to your device.</p>
+          </div>
+        </article>
+
+        <article class="install-step">
+          <div class="phone-shot">
+            <img src="Steps-to-download/step3.jpeg" alt="Step 3 Google Play Store profile menu" />
+          </div>
+          <div class="step-text">
+            <div class="step-number">3</div>
+            <h3>Open your Play Store profile</h3>
+            <p>After the APK finishes downloading, open Google Play Store and tap your profile icon.</p>
+          </div>
+        </article>
+
+        <article class="install-step">
+          <div class="phone-shot">
+            <img src="Steps-to-download/step4.jpeg" alt="Step 4 Play Protect option in Google Play menu" />
+          </div>
+          <div class="step-text">
+            <div class="step-number">4</div>
+            <h3>Go to Play Protect</h3>
+            <p>From the profile menu, choose Play Protect so you can review the Android security settings for the install.</p>
+          </div>
+        </article>
+
+        <article class="install-step">
+          <div class="phone-shot">
+            <img src="Steps-to-download/step5.jpeg" alt="Step 5 Play Protect settings icon" />
+          </div>
+          <div class="step-text">
+            <div class="step-number">5</div>
+            <h3>Open Play Protect settings</h3>
+            <p>Tap the settings icon in the Play Protect screen to see the available protection toggles.</p>
+          </div>
+        </article>
+
+        <article class="install-step">
+          <div class="phone-shot">
+            <img src="Steps-to-download/step6.jpeg" alt="Step 6 Play Protect security toggles" />
+          </div>
+          <div class="step-text">
+            <div class="step-number">6</div>
+            <h3>Adjust the two toggles</h3>
+            <p>If Android blocks the APK install, temporarily switch off the two Play Protect toggles shown in the screenshot.</p>
+          </div>
+        </article>
+
+        <article class="install-step">
+          <div class="phone-shot">
+            <img src="Steps-to-download/step7.jpeg" alt="Step 7 confirm turning off Play Protect temporarily" />
+          </div>
+          <div class="step-text">
+            <div class="step-number">7</div>
+            <h3>Confirm temporarily</h3>
+            <p>Confirm the Play Protect prompt for now. After PhishGuard is installed, return here and turn Play Protect back on.</p>
+          </div>
+        </article>
+
+        <article class="install-step">
+          <div class="phone-shot">
+            <img src="Steps-to-download/step8.jpg" alt="Step 8 install APK from Downloads folder" />
+          </div>
+          <div class="step-text">
+            <div class="step-number">8</div>
+            <h3>Install from Downloads</h3>
+            <p>Open your file manager, go to the Downloads folder, tap the PhishGuard APK, and finish the installation.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta" aria-labelledby="done-title">
+      <div class="cta-inner">
+        <div>
+          <h2 id="done-title">Ready to test PhishGuard?</h2>
+          <p>Once installed, open the app and use the educational example link on the homepage to see the scanning flow.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="button" href="index.html#example-link">View Example Link</a>
+          <a class="button secondary" href="index.html">Back Home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell footer-inner">
+      <div class="brand">
+        <img src="PhishGuardIcon.png" alt="" aria-hidden="true" />
+        <span>PhishGuard</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="#steps">Install Steps</a>
+        <a href="index.html#download">Download</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    (function() {
+      const canvas = document.getElementById('shader-canvas-ANIMATION_20');
+      if (!canvas) return;
+
+      function syncSize() {
+        const w = canvas.clientWidth || 1280;
+        const h = canvas.clientHeight || 720;
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+        }
+      }
+
+      if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(syncSize).observe(canvas);
+      }
+      syncSize();
+
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (!gl) return;
+
+      const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+
+      const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+
+float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), f.x),
+               mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec2 m = u_mouse / u_resolution;
+
+    float t = u_time * 0.15;
+    float n = noise(uv * 8.0 + vec2(t * 0.5, t));
+
+    float lines = sin(uv.x * 40.0 + n * 10.0 + t * 5.0);
+    lines = smoothstep(0.7, 0.8, lines);
+
+    float scan = sin(uv.y * 10.0 - u_time * 2.0);
+    scan = smoothstep(0.9, 1.0, scan);
+
+    float dist = distance(uv, m);
+    float glow = 0.12 / (dist + 0.1);
+
+    vec3 bg = vec3(0.01, 0.02, 0.05);
+    vec3 accent = vec3(0.0, 0.5, 1.0);
+    vec3 scanColor = vec3(0.0, 0.9, 1.0);
+
+    vec3 color = mix(bg, accent, lines * 0.3);
+    color = mix(color, scanColor, scan * lines * 0.4);
+    color += accent * glow * 0.6;
+    color += (hash(uv + u_time) - 0.5) * 0.02;
+
+    gl_FragColor = vec4(color, 1.0);
+}`;
+
+      function createShader(type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      const vertexShader = createShader(gl.VERTEX_SHADER, vs);
+      const fragmentShader = createShader(gl.FRAGMENT_SHADER, fs);
+      if (!vertexShader || !fragmentShader) return;
+
+      const program = gl.createProgram();
+      gl.attachShader(program, vertexShader);
+      gl.attachShader(program, fragmentShader);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+      gl.useProgram(program);
+
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+
+      const position = gl.getAttribLocation(program, 'a_position');
+      gl.enableVertexAttribArray(position);
+      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+      const uTime = gl.getUniformLocation(program, 'u_time');
+      const uRes = gl.getUniformLocation(program, 'u_resolution');
+      const uMouse = gl.getUniformLocation(program, 'u_mouse');
+      const mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+
+      window.addEventListener('mousemove', (event) => {
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width && rect.height) {
+          const nx = (event.clientX - rect.left) / rect.width;
+          const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+          mouse.x = nx * canvas.width;
+          mouse.y = ny * canvas.height;
+        }
+      });
+
+      function render(t) {
+        if (typeof ResizeObserver === 'undefined') syncSize();
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        if (uTime) gl.uniform1f(uTime, t * 0.001);
+        if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+        if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        requestAnimationFrame(render);
+      }
+
+      render(0);
+    })();
+  </script>
+</body>
+</html>

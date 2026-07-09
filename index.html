@@ -432,6 +432,68 @@
       line-height: 1.6;
     }
 
+    .example-lab {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(320px, 1.2fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .example-copy,
+    .example-box {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .example-copy {
+      padding: 28px;
+    }
+
+    .example-copy h3 {
+      margin-bottom: 12px;
+      font-size: 1.35rem;
+    }
+
+    .example-copy p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .example-box {
+      display: grid;
+      gap: 14px;
+      padding: 24px;
+    }
+
+    .example-label {
+      color: var(--cyan);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .example-link {
+      overflow-wrap: anywhere;
+      padding: 18px;
+      border: 1px solid rgba(88, 201, 255, 0.24);
+      border-radius: 8px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.045);
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      line-height: 1.45;
+    }
+
+    .example-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
     .cta {
       width: min(920px, calc(100% - 40px));
       margin: 96px auto 72px;
@@ -492,7 +554,8 @@
 
     @media (max-width: 980px) {
       .hero,
-      .workflow {
+      .workflow,
+      .example-lab {
         grid-template-columns: 1fr;
       }
 
@@ -601,9 +664,11 @@
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#features">Features</a>
         <a href="#workflow">Workflow</a>
+        <a href="guide.html">Install Guide</a>
+        <a href="#example-link">Example Link</a>
         <a href="#download">Try Now</a>
       </nav>
-      <a class="button" href="https://mega.nz/file/Rmgl2ZyK#RVIqeBS3_HZ65jUXn67_0O-aHwd72HQzH_4jNwypuGw">Try Now</a>
+      <a class="button" href="https://mega.nz/file/knpSFSoC#aHTYhfy2hRtGhSrp3THC5-2n4XSjzkZVMbzG9J80gAY">Try Now</a>
     </div>
   </header>
 
@@ -616,7 +681,8 @@
           PhishGuard helps detect risky links, block SMS threats, and warn users before they open suspicious pages on Android.
         </p>
         <div class="hero-actions">
-          <a class="button" href="https://mega.nz/file/Rmgl2ZyK#RVIqeBS3_HZ65jUXn67_0O-aHwd72HQzH_4jNwypuGw">Try Now</a>
+          <a class="button" href="https://mega.nz/file/knpSFSoC#aHTYhfy2hRtGhSrp3THC5-2n4XSjzkZVMbzG9J80gAY">Try Now</a>
+          <a class="button secondary" href="guide.html">Install Guide</a>
           <a class="button secondary" href="#features">View Features</a>
         </div>
         <div class="stats" aria-label="Product highlights">
@@ -719,6 +785,32 @@
               <p>The interface keeps protection visible without turning everyday phone use into extra work.</p>
             </div>
           </div>
+          <div class="step">
+            <div class="step-number">5</div>
+            <div>
+              <h3>Use offline or online</h3>
+              <p>PhishGuard can still support quick checks offline, while online scanning gives stronger link analysis when internet access is available.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-shell" id="example-link" aria-labelledby="example-title">
+      <div class="section-heading">
+        <h2 id="example-title">Educational test link.</h2>
+        <p>Use this copy-ready placeholder when demonstrating how PhishGuard handles a suspicious link inside the app.</p>
+      </div>
+      <div class="example-lab">
+        <div class="example-copy">
+          <h3>Try this suspicious link as an example</h3>
+          <p>Copy and paste the link into PhishGuard to show the detection flow. This sample is for educational purpose only.</p>
+        </div>
+        <div class="example-box">
+          <div class="example-label">Suspicious Link</div>
+          <!-- Replace this URL with the suspicious example link you want to display on the page. -->
+          <div class="example-link">https://facebook.com-login@da.gd/6mtOA</div>
+          <p class="example-note">Only use safe, controlled examples when presenting or testing the app.</p>
         </div>
       </div>
     </section>
@@ -728,9 +820,12 @@
         <img src="PhishGuardIcon.png" alt="" aria-hidden="true" />
         <div>
           <h2 id="download-title">Protect Android users before the tap.</h2>
-          <p>Bring PhishGuard into the moments where phishing links do the most damage.</p>
+          <p>Bring PhishGuard into the moments where phishing links do the most damage, then follow the visual guide if Android asks for extra install steps.</p>
         </div>
-        <a class="button" href="https://mega.nz/file/Rmgl2ZyK#RVIqeBS3_HZ65jUXn67_0O-aHwd72HQzH_4jNwypuGw">Try Now</a>
+        <div class="hero-actions">
+          <a class="button" href="https://mega.nz/file/knpSFSoC#aHTYhfy2hRtGhSrp3THC5-2n4XSjzkZVMbzG9J80gAY">Try Now</a>
+          <a class="button secondary" href="guide.html">View Install Guide</a>
+        </div>
       </div>
     </section>
   </main>
