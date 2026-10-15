@@ -280,34 +280,10 @@
     }
 
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      width: fit-content;
       margin-bottom: 24px;
-      padding: 6px 14px;
-      border: 1px solid rgba(68, 255, 244, 0.3);
-      border-radius: 999px;
-      color: var(--cyan);
-      background: rgba(68, 255, 244, 0.08);
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .pulse {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 12px var(--green);
-      animation: pulseAnim 2s infinite;
-    }
-
-    @keyframes pulseAnim {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 600;
     }
 
     h1 {
@@ -937,7 +913,7 @@
     <!-- Hero Section -->
     <section class="page-shell hero" aria-labelledby="hero-title">
       <div class="hero-content">
-        <div class="eyebrow"><span class="pulse"></span> Android Phishing Defense</div>
+        <p class="eyebrow">Android Tool</p>
         <h1 id="hero-title">Smart protection. <br/><span class="accent">Safer every day.</span></h1>
         <p class="hero-copy">
           PhishGuard helps detect risky links, block SMS threats, and warn users before they open suspicious pages on Android.
