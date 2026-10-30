@@ -412,6 +412,15 @@
       line-height: 1.6;
     }
 
+    .launch-video {
+      display: block;
+      width: min(100%, 360px);
+      height: auto;
+      margin: 0 auto;
+      border-radius: var(--radius);
+      background: #000;
+    }
+
     /* Bento Features Grid (Balanced 3-col System) */
     .feature-grid {
       display: grid;
@@ -949,6 +958,17 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="page-shell" aria-labelledby="launch-title">
+      <div class="section-heading">
+        <h2 id="launch-title">Meet PhishGuard.</h2>
+        <p>Watch the 15-second launch video.</p>
+      </div>
+      <video class="launch-video" controls playsinline preload="metadata" width="1080" height="1920" aria-label="PhishGuard launch video">
+        <source src="PhishGuard-Launch-15s.mp4" type="video/mp4" />
+        <a href="PhishGuard-Launch-15s.mp4">Download the PhishGuard launch video</a>.
+      </video>
     </section>
 
     <!-- Features Section -->
