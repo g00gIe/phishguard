@@ -412,13 +412,25 @@
       line-height: 1.6;
     }
 
-    .launch-video {
-      display: block;
-      width: min(100%, 360px);
-      height: auto;
+    .launch-video-container {
+      max-width: 360px;
       margin: 0 auto;
       border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--line-bright);
       background: #000;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(68, 255, 244, 0.12);
+    }
+
+    .launch-video {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 9 / 16;
+      background: #000;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
     }
 
     /* Bento Features Grid (Balanced 3-col System) */
@@ -686,6 +698,119 @@
       line-height: 1.5;
     }
 
+    /* Reviews Section */
+    .reviews-card {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 36px;
+      align-items: center;
+      padding: 36px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel-strong);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .reviews-qr-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .qr-container {
+      background: #ffffff;
+      padding: 12px;
+      border-radius: 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(68, 255, 244, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-image {
+      display: block;
+      width: 190px;
+      height: 190px;
+      border-radius: 8px;
+    }
+
+    .qr-hint {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .reviews-info-side {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .reviews-badge {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      background: rgba(68, 255, 244, 0.1);
+      border: 1px solid rgba(68, 255, 244, 0.3);
+      border-radius: 999px;
+      color: var(--cyan);
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .reviews-info-side h3 {
+      font-size: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .reviews-info-side p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .reviews-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 4px 0;
+    }
+
+    .highlight-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .highlight-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(88, 244, 141, 0.15);
+      color: var(--green);
+      flex-shrink: 0;
+    }
+
+    .reviews-actions {
+      margin-top: 6px;
+      display: flex;
+      gap: 14px;
+    }
+
     /* CTA Section */
     .cta {
       width: min(960px, calc(100% - 48px));
@@ -777,8 +902,27 @@
     @media (max-width: 900px) {
       .hero,
       .workflow,
-      .example-lab {
+      .example-lab,
+      .reviews-card {
         grid-template-columns: 1fr;
+      }
+
+      .reviews-card {
+        padding: 30px 24px;
+        gap: 28px;
+        text-align: center;
+      }
+
+      .reviews-badge {
+        align-self: center;
+      }
+
+      .reviews-highlights {
+        align-items: center;
+      }
+
+      .reviews-actions {
+        justify-content: center;
       }
 
       .hero {
@@ -862,7 +1006,8 @@
         gap: 10px;
       }
 
-      .copy-btn {
+      .copy-btn,
+      .reviews-actions .button {
         width: 100%;
       }
 
@@ -896,6 +1041,7 @@
         <a href="#workflow">Workflow</a>
         <a href="guide.html">Install Guide</a>
         <a href="#example-link">Educational Test</a>
+        <a href="#reviews">Reviews</a>
       </nav>
 
       <div class="nav-actions">
@@ -914,6 +1060,7 @@
       <a href="#workflow" class="mobile-link">Workflow</a>
       <a href="guide.html" class="mobile-link">Install Guide</a>
       <a href="#example-link" class="mobile-link">Educational Test</a>
+      <a href="#reviews" class="mobile-link">Reviews</a>
       <a class="button" style="width:100%; margin-top:8px;" href="https://mega.nz/file/zKgVXBgK#f7QovGVHGvb5JoytcxbrM10pbVVuO2Rqc-Av7KtqXew">Try Now</a>
     </div>
   </header>
@@ -960,15 +1107,29 @@
       </div>
     </section>
 
-    <section class="page-shell" aria-labelledby="launch-title">
+    <section class="page-shell" id="launch" aria-labelledby="launch-title">
       <div class="section-heading">
         <h2 id="launch-title">Meet PhishGuard.</h2>
-        <p>Watch the 15-second launch video.</p>
+        <p>Watch the official launch video in action.</p>
       </div>
-      <video class="launch-video" controls playsinline preload="metadata" width="1080" height="1920" aria-label="PhishGuard launch video">
-        <source src="PhishGuard-Launch-15s.mp4" type="video/mp4" />
-        <a href="PhishGuard-Launch-15s.mp4">Download the PhishGuard launch video</a>.
-      </video>
+      <div class="launch-video-container">
+        <video
+          class="launch-video"
+          controls
+          controlsList="nodownload"
+          disablePictureInPicture
+          playsinline
+          preload="metadata"
+          width="1080"
+          height="1920"
+          oncontextmenu="return false;"
+          ondragstart="return false;"
+          aria-label="PhishGuard launch video"
+        >
+          <source src="phishguard_launch_1080x1920.mp4" type="video/mp4" />
+          Your browser does not support HTML5 video.
+        </video>
+      </div>
     </section>
 
     <!-- Features Section -->
@@ -1083,6 +1244,59 @@
       </div>
     </section>
 
+    <!-- User Reviews & Feedback Section -->
+    <section class="page-shell" id="reviews" aria-labelledby="reviews-title">
+      <div class="section-heading">
+        <h2 id="reviews-title">User Reviews &amp; Feedback.</h2>
+        <p>Help us improve PhishGuard. Scan the QR code with your phone or submit your feedback directly.</p>
+      </div>
+
+      <div class="reviews-card">
+        <div class="reviews-qr-side">
+          <div class="qr-container">
+            <img src="phishguard-qr-code.png" alt="PhishGuard user review QR code linking to feedback form" class="qr-image" width="190" height="190" loading="lazy" />
+          </div>
+          <p class="qr-hint">Scan with your mobile camera</p>
+        </div>
+
+        <div class="reviews-info-side">
+          <div class="reviews-badge">User Feedback</div>
+          <h3>Help shape the future of PhishGuard</h3>
+          <p>
+            Your feedback directly guides our threat detection, alert accuracy, and overall Android experience. Let us know how PhishGuard performed on your device.
+          </p>
+
+          <div class="reviews-highlights">
+            <div class="highlight-item">
+              <span class="highlight-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span>1-minute quick review</span>
+            </div>
+            <div class="highlight-item">
+              <span class="highlight-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span>Share feedback, bugs, or suggestions</span>
+            </div>
+            <div class="highlight-item">
+              <span class="highlight-icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </span>
+              <span>Direct communication with our team</span>
+            </div>
+          </div>
+
+          <div class="reviews-actions">
+            <a class="button" href="https://forms.gle/VZ7uaqqi13PFjLhb6" target="_blank" rel="noopener noreferrer">
+              <span>Open Feedback Form</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Download / Call to Action -->
     <section class="page-shell cta" id="download" aria-labelledby="download-title">
       <div class="cta-inner">
@@ -1110,6 +1324,7 @@
         <a href="#workflow">Workflow</a>
         <a href="guide.html">Install Guide</a>
         <a href="#example-link">Educational Test</a>
+        <a href="#reviews">Reviews</a>
       </div>
     </div>
   </footer>
@@ -1160,6 +1375,12 @@
           setTimeout(() => { copyLabel.textContent = 'Copy'; }, 2000);
         }
       });
+    }
+
+    // Protect launch video from context menu downloads
+    const launchVideo = document.querySelector('.launch-video');
+    if (launchVideo) {
+      launchVideo.addEventListener('contextmenu', (e) => e.preventDefault());
     }
 
     // Shader Background
